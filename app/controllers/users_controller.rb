@@ -27,17 +27,6 @@ class UsersController < ApplicationController
     end
   end
 
-  private
-  def user_params
-    params.require(:user).permit(:name, :introduction, :profile_image)
-  end
-
-  def ensure_correct_user
-    @user = User.find(params[:id])
-    unless @user == current_user
-      redirect_to user_path(current_user)
-    end
-  end
   def following
     @user = User.find_by(id: params[:id])
     @users = @user.following
@@ -48,6 +37,19 @@ class UsersController < ApplicationController
     @user  = User.find_by(id: params[:id])
     @users = @user.followers
     render 'show_follow'
+  end
+  
+
+  private
+  def user_params
+    params.require(:user).permit(:name, :introduction, :profile_image)
+  end
+
+  def ensure_correct_user
+    @user = User.find(params[:id])
+    unless @user == current_user
+      redirect_to user_path(current_user)
+    end
   end
 
 end

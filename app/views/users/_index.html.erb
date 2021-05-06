@@ -11,7 +11,22 @@
       <tr>
         <td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-icon.jpg") %></td>
         <td><%= user.name %></td>
-        <td></td>
+        <td>フォロー数：<%= user.following.count %></td>
+        <td>フォロワー数：<%= user.followers.count %></td>
+        <% if current_user.following_by?(user) %>
+          <td>
+            <%= form_for(current_user.active_relationships.find_by(followed_id: user.id), html: { method: :delete }) do |f| %>
+              <%= f.submit "フォロー外す", class: "btn-btn-primary" %>
+            <% end %>
+          </td>
+        <% else %>
+          <td>
+            <%= form_for(current_user.active_relationships.build) do |f| %>
+              <div><%= hidden_field_tag :followed_id, user.id %></div>
+              <%= f.submit "フォローする", class: "btn btn-primary" %>
+            <% end %>
+          </td>
+        <% end %>
         <td><%= link_to 'Show', user_path(user), class: "user_#{user.id}" %></td>
       </tr>
     <% end %>

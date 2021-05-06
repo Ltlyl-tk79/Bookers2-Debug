@@ -12,5 +12,5 @@ Rails.application.routes.draw do
      get :following, :followers
     end
   end
-  resources :relationsips, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 end
