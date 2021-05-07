@@ -16,7 +16,7 @@
         <% if current_user.following_by?(user) %>
           <td>
             <%= form_for(current_user.active_relationships.find_by(followed_id: user.id), html: { method: :delete }) do |f| %>
-              <%= f.submit "フォロー外す", class: "btn-btn-primary" %>
+              <%= f.submit "フォロー外す", class: "btn btn-primary" %>
             <% end %>
           </td>
         <% else %>
